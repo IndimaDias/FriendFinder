@@ -3,12 +3,12 @@ var friends = require("../data/friends.js");
 
 function app(app){
     app.get("/api/friends",function(req,res){
-        console.log(friends);
+        return res.json(friends);
     
     });
     
-    app.post("api/friends",function(req,res){
-        console.log("Post");
+    app.post("/api/friends",function(req,res){
+        return console.log("Post");
     });
     
 }
