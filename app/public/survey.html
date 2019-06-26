@@ -254,27 +254,55 @@
     <script type="text/javascript">
         $("#submit").on("click",function(event){
             event.preventDefault();
-            var newFriend = {
-            name : $("#yourName").val(),
-            photo: $("#link").val(),
-            scores :[parseInt($("#ques1").val()),
-                     parseInt($("#ques2").val()),
-                     parseInt($("#ques3").val()),
-                     parseInt($("#ques4").val()),
-                     parseInt($("#ques5").val()),
-                     parseInt($("#ques6").val()),
-                     parseInt($("#ques7").val()),
-                     parseInt($("#ques8").val()),
-                     parseInt($("#ques9").val()),
-                     parseInt($("#ques1").val())
-            ]}
 
-            $.post("/api/friends",newFriend)
-              .then(function(data){
-                $("#matchName").text(data.name);
-                $("#matchImg").attr("src",data.photo);
-                $("#result").modal("toggle");
-            })
+            function validForm(){
+                var formIsValid = true;
+
+                $(".chosen-select").each(function() {
+
+                      if ($(this).val() === "") {
+                       formIsValid = false;
+                      }
+                });
+
+                $(".form-control").each(function(){
+                    if ($(this).val() === ""){
+                        formIsValid = false;
+                    }
+                });
+
+                return formIsValid;
+            }
+
+
+            if (validForm()) {
+
+            
+                var newFriend = {
+                name : $("#yourName").val(),
+                photo: $("#link").val(),
+                scores :[parseInt($("#ques1").val()),
+                        parseInt($("#ques2").val()),
+                        parseInt($("#ques3").val()),
+                        parseInt($("#ques4").val()),
+                        parseInt($("#ques5").val()),
+                        parseInt($("#ques6").val()),
+                        parseInt($("#ques7").val()),
+                        parseInt($("#ques8").val()),
+                        parseInt($("#ques9").val()),
+                        parseInt($("#ques1").val())
+                ]}
+
+                $.post("/api/friends",newFriend)
+                .then(function(data){
+                    $("#matchName").text(data.name);
+                    $("#matchImg").attr("src",data.photo);
+                    $("#result").modal("toggle");
+                });
+            }
+            else{
+                alert("Please fill all the fields in the survey");
+            }
         });
     </script>
     
