@@ -8,27 +8,36 @@ function app(app){
     });
     
     app.post("/api/friends",function(req,res){
-        var reqBody = req.body;
+        var newFriend = req.body;        
 
-        var newFriend = {
-            name : reqBody.yourName,
-            photo: reqBody.link,
-            scores :[reqBody.ques1,
-                    reqBody.ques2,
-                    reqBody.ques3,
-                    reqBody.ques4,
-                    reqBody.ques5,
-                    reqBody.ques6,
-                    reqBody.ques7,
-                    reqBody.ques8,
-                    reqBody.ques9,
-                    reqBody.ques10
-            ]
-        }
-
+        console.log(newFriend);
         var userScores = newFriend.scores;
 
-        return console.log(userScores);
+        console.log(userScores);
+
+        var diffrences = [];
+        var minimumDif = 0; //least amount of difference.
+        var totalDif = 0; //total of diffrences
+        var matchingIndex = 0;
+
+        for (var i=0; i<friends.length;i++){
+            var friendScore =  friends[i].scores;
+            console.log(friendScore);
+
+            for(var x=0; x < friendScore.length; x++){
+                 totalDif += Math.abs(friendScore[x] - userScores[x]);
+                       
+            }
+
+            if(totalDif<minimumDif || minimumDif === 0 ){
+                minimumDif = totalDif;
+                matchingIndex = i;
+             }
+        }
+
+        console.log(friends[matchingIndex]);
+        friends.push(newFriend);
+        res.send(friends[matchingIndex]);
     
     });
     
